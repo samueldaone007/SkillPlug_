@@ -1,0 +1,15 @@
+<div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-800 text-center">
+    <div class="w-16 h-16 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+    </div>
+    <h3 class="text-lg font-bold text-green-800 dark:text-green-200 mb-2">Application Submitted!</h3>
+    <p class="text-green-700 dark:text-green-300 text-sm mb-4">The client will review your application and get back to you.</p>
+    <a href="{% url 'job_detail' job.pk %}" class="inline-flex items-center text-green-700 dark:text-green-300 font-medium hover:underline">
+        Back to Job
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+    </a>
+</div>

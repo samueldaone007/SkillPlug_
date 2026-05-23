@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<section class="bg-gradient-to-br from-primary-600 to-primary-800 dark:from-gray-900 dark:to-primary-900 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="{{ user.display_name }}" class="w-16 h-16 rounded-2xl object-cover ring-4 ring-white/20">
+                {% else %}
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-2xl font-bold ring-4 ring-white/20">
+                        {{ user.display_name|first|upper }}
+                    </div>
+                {% endif %}
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white">Welcome, {{ user.display_name }}!</h1>
+                    <p class="text-primary-200 text-sm mt-1">Manage your profile and track your activity</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="{{ user.get_absolute_url }}" class="px-5 py-2.5 bg-white/10 backdrop-blur-sm text-white font-medium rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
+                    View Public Profile
+                </a>
+                <a href="{% url 'profile_edit' %}" class="px-5 py-2.5 bg-white text-primary-700 font-medium rounded-xl hover:bg-primary-50 transition-colors shadow-lg">
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Content -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-4">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ portfolio_count }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Portfolio Items</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ my_applications|length }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Applications</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.034a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ my_reviews|length }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Reviews</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ saved_count }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Saved</p>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Column -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- My Applications -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        My Applications
+                    </h2>
+                    <a href="{% url 'my_applications' %}" class="text-sm text-primary-600 dark:text-primary-400 font-medium hover:underline">View All</a>
+                </div>
+                {% if my_applications %}
+                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                        {% for app in my_applications %}
+                            <div class="p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <a href="{% url 'job_detail' app.job.pk %}" class="font-semibold text-gray-900 dark:text-white hover:text-primary-600 transition-colors">{{ app.job.title }}</a>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ app.job.posted_by.display_name }}</p>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium {% if app.status == 'pending' %}bg-yellow-100 text-yellow-700{% elif app.status == 'accepted' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                                        {{ app.status|title }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="p-8 text-center">
+                        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">No applications yet</p>
+                        <a href="{% url 'job_list' %}" class="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline mt-1 inline-block">Browse jobs</a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- My Job Posts -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        My Job Posts
+                    </h2>
+                    <a href="{% url 'my_jobs' %}" class="text-sm text-primary-600 dark:text-primary-400 font-medium hover:underline">View All</a>
+                </div>
+                {% if my_jobs %}
+                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                        {% for job in my_jobs %}
+                            <div class="p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <a href="{% url 'job_detail' job.pk %}" class="font-semibold text-gray-900 dark:text-white hover:text-primary-600 transition-colors">{{ job.title }}</a>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ job.applications.count }} application{{ job.applications.count|pluralize }}</p>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium {% if job.status == 'open' %}bg-green-100 text-green-700{% elif job.status == 'in_progress' %}bg-blue-100 text-blue-700{% elif job.status == 'completed' %}bg-gray-100 text-gray-700{% else %}bg-red-100 text-red-700{% endif %}">
+                                        {{ job.status|title }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="p-8 text-center">
+                        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">No job posts yet</p>
+                        <a href="{% url 'job_post' %}" class="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline mt-1 inline-block">Post a job</a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Portfolio -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Portfolio
+                    </h2>
+                    <a href="{% url 'portfolio_add' %}" class="text-sm text-primary-600 dark:text-primary-400 font-medium hover:underline">Add Item</a>
+                </div>
+                {% if user.portfolio_items.exists %}
+                    <div class="p-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        {% for item in user.portfolio_items.all|slice:":6" %}
+                            <div class="group relative aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                                    <p class="text-white text-xs font-medium truncate">{{ item.title }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="p-8 text-center">
+                        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mb-3">No portfolio items yet</p>
+                        <a href="{% url 'portfolio_add' %}" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-xl hover:bg-primary-700 transition-colors">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            Add Portfolio Item
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="space-y-8">
+            <!-- Quick Actions -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Quick Actions</h3>
+                <div class="space-y-2">
+                    <a href="{% url 'portfolio_add' %}" class="flex items-center px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 mr-3 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Add Portfolio Item
+                    </a>
+                    <a href="{% url 'job_post' %}" class="flex items-center px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 mr-3 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Post a Job
+                    </a>
+                    <a href="{% url 'job_list' %}" class="flex items-center px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 mr-3 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        Find Work
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Profile Status -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Profile Status</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Profile Complete</span>
+                        {% if user.profile_complete %}
+                            <span class="text-green-600 text-sm font-medium flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Yes
+                            </span>
+                        {% else %}
+                            <span class="text-yellow-600 text-sm font-medium">Incomplete</span>
+                        {% endif %}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Verified</span>
+                        {% if user.verified %}
+                            <span class="text-green-600 text-sm font-medium flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Yes
+                            </span>
+                        {% else %}
+                            <span class="text-gray-400 text-sm font-medium">Pending</span>
+                        {% endif %}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Availability</span>
+                        <span class="text-sm font-medium {% if user.availability_status == 'available' %}text-green-600{% elif user.availability_status == 'busy' %}text-yellow-600{% else %}text-gray-400{% endif %}">
+                            {{ user.get_availability_status_display }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommended -->
+            {% if recommended %}
+                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
+                    <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Recommended</h3>
+                    <div class="space-y-4">
+                        {% for r in recommended %}
+                            <a href="{{ r.get_absolute_url }}" class="flex items-center gap-3 group">
+                                {% if r.profile_image %}
+                                    <img src="{{ r.profile_image.url }}" alt="{{ r.display_name }}" class="w-10 h-10 rounded-full object-cover">
+                                {% else %}
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-bold">
+                                        {{ r.display_name|first|upper }}
+                                    </div>
+                                {% endif %}
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors truncate">{{ r.display_name }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ r.school_display|truncatechars:20 }}</p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

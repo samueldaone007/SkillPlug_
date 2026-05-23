@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="bg-gradient-to-br from-primary-600 to-primary-800 dark:from-gray-900 dark:to-primary-900 py-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-white">My Applications</h1>
+    </div>
+</section>
+
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-4">
+    <div class="space-y-4">
+        {% for app in applications %}
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm hover:shadow-md transition-all-300">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex-1">
+                        <a href="{% url 'job_detail' app.job.pk %}" class="font-bold text-gray-900 dark:text-white hover:text-primary-600 transition-colors text-lg">{{ app.job.title }}</a>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ app.job.posted_by.display_name }} | {{ app.created_at|naturaltime }}</p>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 line-clamp-2">{{ app.message }}</p>
+                        {% if app.proposed_budget %}
+                            <p class="text-sm text-primary-600 dark:text-primary-400 mt-2 font-medium">Proposed: ₦{{ app.proposed_budget|intcomma }}</p>
+                        {% endif %}
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium shrink-0 {% if app.status == 'pending' %}bg-yellow-100 text-yellow-700{% elif app.status == 'accepted' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ app.status|title }}
+                    </span>
+                </div>
+            </div>
+        {% empty %}
+            <div class="text-center py-16">
+                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 mb-4">No applications yet</p>
+                <a href="{% url 'job_list' %}" class="inline-flex px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors">
+                    Browse Jobs
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
