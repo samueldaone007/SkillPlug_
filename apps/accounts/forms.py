@@ -15,7 +15,7 @@ class CustomSignupForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
-            "class": "w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all",
+            "class": "w-full px-4 py-3 rounded-lg border border-black-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all",
             "placeholder": "your.email@school.edu.ng",
         }),
     )
