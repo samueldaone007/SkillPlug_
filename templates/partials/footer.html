@@ -1,0 +1,56 @@
+<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Brand -->
+            <div class="col-span-1 md:col-span-1">
+                <a href="{% url 'home' %}" class="flex items-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-bold text-gray-800 dark:text-white">SkillPlug</span>
+                </a>
+                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    Connecting Nigerian students with clients who need affordable digital services. Built for students, by students.
+                </p>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-4">Platform</h3>
+                <ul class="space-y-3">
+                    <li><a href="{% url 'freelancer_list' %}" class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">Find Freelancers</a></li>
+                    <li><a href="{% url 'job_list' %}" class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">Browse Jobs</a></li>
+                    <li><a href="{% url 'job_post' %}" class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">Post a Job</a></li>
+                </ul>
+            </div>
+            
+            <!-- For Students -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-4">For Students</h3>
+                <ul class="space-y-3">
+                    <li><a href="{% url 'account_signup' %}" class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">Create Profile</a></li>
+                    <li><a href="{% url 'job_list' %}" class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">Find Work</a></li>
+                    <li><span class="text-sm text-gray-500 dark:text-gray-400">Get Verified</span></li>
+                </ul>
+            </div>
+            
+            <!-- Support -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-4">Support</h3>
+                <ul class="space-y-3">
+                    <li><span class="text-sm text-gray-500 dark:text-gray-400">Help Center</span></li>
+                    <li><span class="text-sm text-gray-500 dark:text-gray-400">Safety Center</span></li>
+                    <li><span class="text-sm text-gray-500 dark:text-gray-400">Contact Us</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Bar -->
+        <div class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center">
+            <p class="text-xs text-gray-400 dark:text-gray-500"> SkillPlug. All rights reserved.</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 sm:mt-0">Made with care for Nigerian students</p>
+        </div>
+    </div>
+</footer>

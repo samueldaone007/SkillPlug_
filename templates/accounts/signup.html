@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-lg">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <a href="{% url 'home' %}" class="inline-flex items-center justify-center space-x-2">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span class="text-2xl font-bold text-gray-900 dark:text-white">SkillPlug</span>
+            </a>
+            <h1 class="mt-6 text-2xl font-bold text-gray-900 dark:text-white">Create your account</h1>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Join SkillPlug to connect with student talent</p>
+        </div>
+        
+        <!-- Form Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 md:p-8">
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.username.errors }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.full_name.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.email.errors }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Account Type</label>
+                        {{ form.account_type }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">School</label>
+                        {{ form.school }}
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">WhatsApp Number</label>
+                    {{ form.whatsapp }}
+                    <p class="mt-1 text-xs text-gray-500">Format: 2348012345678 (with country code)</p>
+                    {% if form.whatsapp.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.whatsapp.errors }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.password1.errors }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.password2.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/30 transition-all-300 hover:-translate-y-0.5">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Already have an account?
+                    <a href="{% url 'account_login' %}" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 transition-colors">
+                        Sign in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
