@@ -24,6 +24,12 @@ ALLOWED_HOSTS = config(
     default="localhost,127.0.0.1",
     cast=lambda v: [s.strip() for s in v.split(",")],
 )
+
+# Render sets this automatically for every deploy; add it so the app works
+# out of the box on Render without needing to hand-maintain ALLOWED_HOSTS.
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
  
  
 # =============================================================================
@@ -162,7 +168,8 @@ USE_TZ = True
  
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+_static_dir = BASE_DIR / "static"
+STATICFILES_DIRS = [_static_dir] if _static_dir.exists() else []
  
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
  
