@@ -121,9 +121,8 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = "accounts.User"
  
 # django-allauth settings
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {"email", "username"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
 ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
 ACCOUNT_SIGNUP_REDIRECT_URL = "profile_create"
 ACCOUNT_LOGOUT_ON_GET = True
